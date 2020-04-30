@@ -53,9 +53,10 @@ class Nav extends Component {
     return (
       <nav role="navigation" aria-label="Primary" className="nav">
         <ul id="nav_inner" className="nav__list">
-          {NAVITEMS.map((item) => {
+          {NAVITEMS.map((item, i) => {
             return (
               <NavList
+                key={item.hasOwnProperty("key") ? item.key : `link-${i}`}
                 text={item.text}
                 href={item.href}
                 sublinks={
