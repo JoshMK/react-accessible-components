@@ -7,19 +7,29 @@ class NavList extends Component {
   state = {
     focused: false,
     sublinks: this.props.sublinks,
+    index: 0,
   };
 
-  listSublink = React.createRef();
+  list = React.createRef();
 
   cycleListWithKeyboard = (e) => {
-    console.log(e.keyCode);
+    console.log("test");
     if (e.keyCode === 40) {
+      //
       this.setState(
         {
           focused: true,
         },
         () => {
-          this.listSublink.current.focus();
+          this.list.current.children[
+            this.state.index
+          ].firstElementChild.focus();
+        },
+        () => {
+          console.log("ji");
+          this.setState({
+            index: this.state.index + 1,
+          });
         }
       );
     } else if (e.keyCode === 9) {
@@ -38,6 +48,7 @@ class NavList extends Component {
       >
         <a href={this.props.href}>{this.props.text}</a>
         <ul
+          ref={this.list}
           className={`nav__list__drop ${this.state.focused ? "has-focus" : ""}`}
         >
           {sublinks.map((sublink, i) => {
@@ -47,9 +58,7 @@ class NavList extends Component {
                   sublink.hasOwnProperty("key") ? sublink.key : `sublink-${i}`
                 }
               >
-                <a href={sublink.href} ref={this.listSublink}>
-                  {sublink.text}
-                </a>
+                <a href={sublink.href}>{sublink.text}</a>
               </li>
             );
           })}
