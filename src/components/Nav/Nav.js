@@ -7,38 +7,38 @@ import "./nav.css";
 //links - this array can be imported as a constant, placed within the nav element to keep project structure flexible
 const NAVITEMS = [
   {
-    href: "heading1",
-    text: "Heading 1",
+    href: "heading-one",
+    text: "Heading One",
     sublinks: [
       {
-        href: "subheading1",
-        text: "Subheading 1",
+        href: "subheading-one",
+        text: "Subheading One",
       },
       {
-        href: "subheading2",
-        text: "Subheading 2",
+        href: "subheading-two",
+        text: "Subheading Two",
       },
     ],
   },
   {
-    href: "heading2",
-    text: "Heading 2",
+    href: "heading-two",
+    text: "Heading Two",
   },
   {
-    href: "heading3",
-    text: "Heading 3",
+    href: "heading-three",
+    text: "Heading Three",
     sublinks: [
       {
-        href: "subheading1",
-        text: "Subheading 1",
+        href: "subheading-three",
+        text: "Subheading Three",
       },
       {
-        href: "subheading2",
-        text: "Subheading 2",
+        href: "subheading-four",
+        text: "Subheading Four",
       },
       {
-        href: "subheading3",
-        text: "Subheading 3",
+        href: "subheading-five",
+        text: "Subheading Five",
       },
     ],
   },

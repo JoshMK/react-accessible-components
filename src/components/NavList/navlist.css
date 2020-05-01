@@ -71,9 +71,6 @@ nav ol {
   transition: transform 0.2s ease-in-out, opacity 0.1s ease-out;
   overflow: hidden;
   z-index: 1;
-}
-
-.nav__list__drop {
   background: #fafafa;
   border: 1px solid #444;
   border-top: 0;
