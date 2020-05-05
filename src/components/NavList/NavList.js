@@ -15,7 +15,6 @@ class NavList extends Component {
   };
 
   incrementDecrementListIndex = (index, increment) => {
-    console.log(increment);
     this.setState((prevState) => ({
       ...prevState,
       index: increment === true ? prevState.index + 1 : prevState.index - 1,
@@ -41,17 +40,14 @@ class NavList extends Component {
       //up arrow key
     } else if (e.keyCode === 38) {
       if (this.state.index > 0) {
-        const list = this.list.current;
         this.setState(
           (prevState) => ({
             ...prevState,
             focused: true,
           }),
           () => {
-            console.log(list.children[0].firstElementChild);
-            //
-            list.children[0].firstElementChild.focus();
-            this.incrementDecrementListIndex(this.state.index, false);
+            list.children[this.state.index - 1].firstElementChild.focus();
+            this.incrementDecrementListIndex(this.state.index - 1, false);
           }
         );
       }
