@@ -6,7 +6,6 @@ import "./navlist.css";
 class NavList extends Component {
   state = {
     focused: false,
-    sublinks: this.props.sublinks,
     index: 0,
   };
 
@@ -15,8 +14,18 @@ class NavList extends Component {
     console.log(e);
   };
 
+  incrementDecrementListIndex = (index, increment) => {
+    console.log(increment);
+    this.setState((prevState) => ({
+      ...prevState,
+      index: increment === true ? prevState.index + 1 : prevState.index - 1,
+    }));
+  };
+
   cycleListWithKeyboard = (e) => {
-    console.log("test");
+    console.log(e.keyCode);
+    const list = this.list.current;
+    //down arrow key
     if (e.keyCode === 40) {
       //
       this.setState(
@@ -25,18 +34,27 @@ class NavList extends Component {
           focused: true,
         }),
         () => {
-          this.list.current.children[
-            this.state.index
-          ].firstElementChild.focus();
-        },
-        () => {
-          console.log("ji");
-          this.setState((prevState) => ({
-            ...prevState,
-            index: prevState.index + 1,
-          }));
+          list.children[this.state.index].firstElementChild.focus();
+          this.incrementDecrementListIndex(this.state.index, true);
         }
       );
+      //up arrow key
+    } else if (e.keyCode === 38) {
+      if (this.state.index > 0) {
+        const list = this.list.current;
+        this.setState(
+          (prevState) => ({
+            ...prevState,
+            focused: true,
+          }),
+          () => {
+            console.log(list.children[0].firstElementChild);
+            //
+            list.children[0].firstElementChild.focus();
+            this.incrementDecrementListIndex(this.state.index, false);
+          }
+        );
+      }
     } else if (e.keyCode === 9) {
       this.setState({
         focused: false,
@@ -47,7 +65,7 @@ class NavList extends Component {
   list = React.createRef();
 
   render() {
-    const sublinks = this.state.sublinks;
+    const sublinks = this.props.sublinks;
     return (
       <li
         className={`has-drop ${this.state.focused ? "has-drop--focused" : ""}`}
