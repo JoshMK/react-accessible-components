@@ -6,12 +6,7 @@ import "./navlist.css";
 class NavList extends Component {
   state = {
     focused: false,
-    index: 0,
-  };
-
-  resetFocus = (e) => {
-    e.preventDefault();
-    console.log(e);
+    index: -1,
   };
 
   incrementDecrementListIndex = (index, increment) => {
@@ -22,14 +17,14 @@ class NavList extends Component {
   };
 
   cycleListWithKeyboard = (e, list) => {
-    console.log(e.keyCode);
-    console.log(this.state.index);
+    //console.log(e.keyCode);
+    const key = e.key || e.which || e.keyCode;
     //down arrow key
-    if (e.keyCode === 40) {
+    if (key === "ArrowDown" || key === 40) {
       //
       if (
         list.childElementCount > 0 &&
-        this.state.index < list.childElementCount
+        this.state.index + 1 < list.childElementCount
       ) {
         //
         this.setState(
@@ -39,13 +34,12 @@ class NavList extends Component {
           }),
           () => {
             this.incrementDecrementListIndex(this.state.index, true);
-            list.children[this.state.index].firstElementChild.focus();
+            list.children[this.state.index + 1].firstElementChild.focus();
           }
         );
       }
-
       //up arrow key
-    } else if (e.keyCode === 38) {
+    } else if (key === "ArrowUp" || key === 40) {
       if (this.state.index > 0) {
         this.setState(
           (prevState) => ({
@@ -54,15 +48,16 @@ class NavList extends Component {
           }),
           () => {
             this.incrementDecrementListIndex(this.state.index, false);
-            list.children[this.state.index - 2].firstElementChild.focus();
+            list.children[this.state.index - 1].firstElementChild.focus();
           }
         );
       }
-    } else if (e.keyCode === 9) {
+      //reset index after tabbing or shift-tabbing through nav
+    } else if (key === "Tab" || key === 9) {
       this.setState((prevState) => ({
         ...prevState,
         focused: false,
-        index: 0,
+        index: -1,
       }));
     }
   };
@@ -75,7 +70,6 @@ class NavList extends Component {
       <li
         className={`has-drop ${this.state.focused ? "has-drop--focused" : ""}`}
         onKeyDown={(e) => this.cycleListWithKeyboard(e, this.list.current)}
-        onMouseDown={(e) => this.resetFocus(e)}
       >
         <a href={this.props.href}>{this.props.text}</a>
         <ul
