@@ -2,8 +2,6 @@
 import React, { Component } from "react";
 //custom components
 import NavList from "../NavList/NavList";
-//css
-import "./nav.css";
 //links - this array can be imported as a constant, placed within the nav element to keep project structure flexible
 const NAVITEMS = [
   {

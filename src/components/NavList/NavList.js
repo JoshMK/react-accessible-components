@@ -1,7 +1,7 @@
 //React core components
 import React, { Component } from "react";
 //css
-//import "./navlist.css";
+import "./navlist.css";
 
 class NavList extends Component {
   state = {
@@ -10,16 +10,20 @@ class NavList extends Component {
     index: 0,
   };
 
-  list = React.createRef();
+  resetFocus = (e) => {
+    e.preventDefault();
+    console.log(e);
+  };
 
   cycleListWithKeyboard = (e) => {
     console.log("test");
     if (e.keyCode === 40) {
       //
       this.setState(
-        {
+        (prevState) => ({
+          ...prevState,
           focused: true,
-        },
+        }),
         () => {
           this.list.current.children[
             this.state.index
@@ -27,9 +31,10 @@ class NavList extends Component {
         },
         () => {
           console.log("ji");
-          this.setState({
-            index: this.state.index + 1,
-          });
+          this.setState((prevState) => ({
+            ...prevState,
+            index: prevState.index + 1,
+          }));
         }
       );
     } else if (e.keyCode === 9) {
@@ -39,12 +44,15 @@ class NavList extends Component {
     }
   };
 
+  list = React.createRef();
+
   render() {
     const sublinks = this.state.sublinks;
     return (
       <li
         className={`has-drop ${this.state.focused ? "has-drop--focused" : ""}`}
         onKeyDown={(e) => this.cycleListWithKeyboard(e)}
+        onMouseDown={(e) => this.resetFocus(e)}
       >
         <a href={this.props.href}>{this.props.text}</a>
         <ul
