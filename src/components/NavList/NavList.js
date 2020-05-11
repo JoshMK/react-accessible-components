@@ -9,6 +9,22 @@ class NavList extends Component {
     index: -1,
   };
 
+  list = React.createRef();
+
+  resetFocusAfterClick = (e) => {
+    if (!this.list.current.contains(e.target)) {
+      this.resetFocus();
+    }
+  };
+
+  resetFocus = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      focused: false,
+      index: -1,
+    }));
+  };
+
   incrementDecrementListIndex = (index, increment) => {
     this.setState((prevState) => ({
       ...prevState,
@@ -54,15 +70,17 @@ class NavList extends Component {
       }
       //reset index after tabbing or shift-tabbing through nav
     } else if (key === "Tab" || key === 9) {
-      this.setState((prevState) => ({
-        ...prevState,
-        focused: false,
-        index: -1,
-      }));
+      this.resetFocus();
     }
   };
 
-  list = React.createRef();
+  componentWillMount() {
+    document.addEventListener("click", this.resetFocusAfterClick, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("click", this.resetFocusAfterClick, false);
+  }
 
   render() {
     const sublinks = this.props.sublinks;
