@@ -72,6 +72,21 @@ class NavList extends Component {
     } else if (key === "Tab" || key === 9) {
       this.resetFocus();
     }
+    //enter - focus initial child
+    else if (key === "Enter" || key === 13) {
+      if (this.state.index === -1) {
+        this.setState(
+          (prevState) => ({
+            ...prevState,
+            focused: true,
+          }),
+          () => {
+            this.incrementDecrementListIndex(this.state.index, true);
+            list.children[this.state.index + 1].firstElementChild.focus();
+          }
+        );
+      }
+    }
   };
 
   componentWillMount() {
