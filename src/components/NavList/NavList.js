@@ -11,13 +11,13 @@ class NavList extends Component {
 
   list = React.createRef();
 
-  resetFocusAfterClick = (e) => {
+  resetListFocusAfterClick = (e) => {
     if (!this.list.current.contains(e.target)) {
-      this.resetFocus();
+      this.resetListFocus();
     }
   };
 
-  resetFocus = () => {
+  resetListFocus = () => {
     this.setState((prevState) => ({
       ...prevState,
       focused: false,
@@ -32,69 +32,55 @@ class NavList extends Component {
     }));
   };
 
+  //true - increment | false - decrement
+  updateListIndex = (increment = true) => {
+    this.setState(
+      (prevState) => ({
+        ...prevState,
+        focused: true,
+      }),
+      () => {
+        this.incrementDecrementListIndex(this.state.index, increment);
+        this.list.current.children[
+          increment === true ? this.state.index + 1 : this.state.index - 1
+        ].firstElementChild.focus();
+      }
+    );
+  };
+
   cycleListWithKeyboard = (e, list) => {
-    //console.log(e.keyCode);
     const key = e.key || e.which || e.keyCode;
     //down arrow key
     if (key === "ArrowDown" || key === 40) {
-      //
       if (
         list.childElementCount > 0 &&
         this.state.index + 1 < list.childElementCount
       ) {
-        //
-        this.setState(
-          (prevState) => ({
-            ...prevState,
-            focused: true,
-          }),
-          () => {
-            this.incrementDecrementListIndex(this.state.index, true);
-            list.children[this.state.index + 1].firstElementChild.focus();
-          }
-        );
+        this.updateListIndex(true);
       }
       //up arrow key
     } else if (key === "ArrowUp" || key === 40) {
       if (this.state.index > 0) {
-        this.setState(
-          (prevState) => ({
-            ...prevState,
-            focused: true,
-          }),
-          () => {
-            this.incrementDecrementListIndex(this.state.index, false);
-            list.children[this.state.index - 1].firstElementChild.focus();
-          }
-        );
+        this.updateListIndex(false);
       }
-      //reset index after tabbing or shift-tabbing through nav
+      //tab - reset index after tabbing or shift-tabbing through nav
     } else if (key === "Tab" || key === 9) {
-      this.resetFocus();
+      this.resetListFocus();
     }
     //enter - focus initial child
     else if (key === "Enter" || key === 13) {
       if (this.state.index === -1) {
-        this.setState(
-          (prevState) => ({
-            ...prevState,
-            focused: true,
-          }),
-          () => {
-            this.incrementDecrementListIndex(this.state.index, true);
-            list.children[this.state.index + 1].firstElementChild.focus();
-          }
-        );
+        this.updateListIndex(true);
       }
     }
   };
 
   componentWillMount() {
-    document.addEventListener("click", this.resetFocusAfterClick, false);
+    document.addEventListener("click", this.resetListFocusAfterClick, false);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("click", this.resetFocusAfterClick, false);
+    document.removeEventListener("click", this.resetListFocusAfterClick, false);
   }
 
   render() {
