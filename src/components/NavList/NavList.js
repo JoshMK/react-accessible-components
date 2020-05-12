@@ -50,8 +50,22 @@ class NavList extends Component {
 
   cycleListWithKeyboard = (e, list) => {
     const key = e.key || e.which || e.keyCode;
+    //left arrow key - cycle through topmost list items
+    if (key === "ArrowLeft" || key === 37) {
+      if (this.state.index === -1) {
+        const parentList = this.list.current.parentNode;
+        parentList.previousSibling.firstElementChild.focus();
+      }
+    }
+    //right arrow key - cycle through topmost list items
+    else if (key === "ArrowRight" || key === 39) {
+      if (this.state.index === -1) {
+        const parentList = this.list.current.parentNode;
+        parentList.nextSibling.firstElementChild.focus();
+      }
+    }
     //down arrow key
-    if (key === "ArrowDown" || key === 40) {
+    else if (key === "ArrowDown" || key === 40) {
       if (
         list.childElementCount > 0 &&
         this.state.index + 1 < list.childElementCount
@@ -69,13 +83,13 @@ class NavList extends Component {
     }
     //enter - focus initial child
     else if (key === "Enter" || key === 13) {
-      if (this.state.index === -1) {
+      if (this.state.index === -1 && list.childElementCount > 0) {
         this.updateListIndex(true);
       }
     }
   };
 
-  componentWillMount() {
+  componentDidMount() {
     document.addEventListener("click", this.resetListFocusAfterClick, false);
   }
 
