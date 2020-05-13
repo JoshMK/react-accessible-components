@@ -25,6 +25,15 @@ class NavList extends Component {
     }));
   };
 
+  //true - right | false - left
+  cycleParentListLeftRightWithKeyboard = (parentList, increment) => {
+    const IncrementDecrement =
+      increment === true ? parentList.nextSibling : parentList.previousSibling;
+    if (IncrementDecrement !== null) {
+      IncrementDecrement.firstElementChild.focus();
+    }
+  };
+
   incrementDecrementListIndex = (index, increment) => {
     this.setState((prevState) => ({
       ...prevState,
@@ -50,18 +59,19 @@ class NavList extends Component {
 
   cycleListWithKeyboard = (e, list) => {
     const key = e.key || e.which || e.keyCode;
+    const parentList = this.list.current.parentNode;
     //left arrow key - cycle through topmost list items
     if (key === "ArrowLeft" || key === 37) {
       if (this.state.index === -1) {
-        const parentList = this.list.current.parentNode;
-        parentList.previousSibling.firstElementChild.focus();
+        //only cycle left if sibling exists
+        this.cycleParentListLeftRightWithKeyboard(parentList, false);
       }
     }
     //right arrow key - cycle through topmost list items
     else if (key === "ArrowRight" || key === 39) {
       if (this.state.index === -1) {
-        const parentList = this.list.current.parentNode;
-        parentList.nextSibling.firstElementChild.focus();
+        //only cycle left if sibling exists
+        this.cycleParentListLeftRightWithKeyboard(parentList, true);
       }
     }
     //down arrow key
