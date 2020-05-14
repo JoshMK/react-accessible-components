@@ -5,6 +5,7 @@ import NavList from "../NavList/NavList";
 //links - this array can be imported as a constant, placed within the nav element to keep project structure flexible
 const NAVITEMS = [
   {
+    id: "first", //use descriptive name based on content - (i.e., about, faq, etc.)
     href: "heading-one",
     text: "Heading One",
     sublinks: [
@@ -19,10 +20,12 @@ const NAVITEMS = [
     ],
   },
   {
+    id: "second",
     href: "heading-two",
     text: "Heading Two",
   },
   {
+    id: "third",
     href: "heading-three",
     text: "Heading Three",
     sublinks: [
@@ -55,8 +58,9 @@ class Nav extends Component {
             return (
               <NavList
                 key={item.hasOwnProperty("key") ? item.key : `link-${i}`}
-                text={item.text}
+                id={item.id}
                 href={item.href}
+                text={item.text}
                 sublinks={
                   item.hasOwnProperty("sublinks") && item.sublinks.length > 0
                     ? item.sublinks
