@@ -52,7 +52,7 @@ NAVITEMS.map((link) => {
 class Nav extends Component {
   render() {
     return (
-      <nav role="navigation" aria-label="Primary">
+      <nav aria-label="Primary">
         <ul id="nav_inner" className="nav__list">
           {NAVITEMS.map((item, i) => {
             return (
