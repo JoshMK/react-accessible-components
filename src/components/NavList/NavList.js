@@ -91,10 +91,16 @@ class NavList extends Component {
     } else if (key === "Tab" || key === 9) {
       this.resetListFocus();
     }
-    //enter - focus initial child
-    else if (key === "Enter" || key === 13) {
+    //space - focus initial child
+    else if (key === " " || key === 32) {
       if (this.state.index === -1 && list.childElementCount > 0) {
         this.updateListIndex(true);
+      }
+    }
+    //enter - simulate click in topmost dropdown nav link
+    else if (key === "Enter" || key === 32) {
+      if (this.state.index === -1) {
+        list.previousSibling.click();
       }
     }
   };
@@ -113,14 +119,10 @@ class NavList extends Component {
       <li
         className={`has-drop ${this.state.focused ? "has-drop--focused" : ""}`}
         tabIndex="0"
+        aria-expanded={this.state.focused === true ? "true" : "false"}
         onKeyDown={(e) => this.cycleListWithKeyboard(e, this.list.current)}
       >
-        <a
-          id={this.props.id}
-          href={this.props.href}
-          tabIndex="-1"
-          aria-expanded={this.state.focused === true ? "true" : "false"}
-        >
+        <a id={this.props.id} href={this.props.href} tabIndex="-1">
           {this.props.text}
         </a>
         <ul
