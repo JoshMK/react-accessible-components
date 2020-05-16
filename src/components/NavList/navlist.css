@@ -15,14 +15,16 @@
 
 .nav__list a {
   color: #000;
+  background-color: #fff;
   text-decoration: none;
   display: block;
   padding: 1em;
 }
 
 .nav__list a:hover,
-.nav__list a:focus {
-  background: #000;
+.nav__list a:focus,
+.has-drop:focus > a {
+  background-color: #000;
   color: #fff;
 }
 

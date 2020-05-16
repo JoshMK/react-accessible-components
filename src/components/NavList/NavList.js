@@ -112,12 +112,14 @@ class NavList extends Component {
     return (
       <li
         className={`has-drop ${this.state.focused ? "has-drop--focused" : ""}`}
+        tabIndex="0"
         onKeyDown={(e) => this.cycleListWithKeyboard(e, this.list.current)}
       >
         <a
-          aria-controls={`menu-${this.props.id}`}
-          href={this.props.href}
           id={this.props.id}
+          href={this.props.href}
+          tabIndex="-1"
+          aria-expanded={this.state.focused === true ? "true" : "false"}
         >
           {this.props.text}
         </a>
