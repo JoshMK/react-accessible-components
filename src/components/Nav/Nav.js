@@ -2,6 +2,8 @@
 import React, { Component } from "react";
 //custom components
 import NavList from "../NavList/NavList";
+//css
+import "./nav.css";
 //links - this array can be imported as a constant, placed within the nav element to keep project structure flexible
 const NAVITEMS = [
   {
@@ -53,7 +55,7 @@ class Nav extends Component {
   render() {
     return (
       <nav aria-label="Primary">
-        <ul id="nav_inner" className="nav__list">
+        <ul className="nav__list">
           {NAVITEMS.map((item, i) => {
             return (
               <NavList

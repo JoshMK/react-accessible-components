@@ -1,33 +1,3 @@
-.nav__list {
-  border-bottom: 1px solid #000;
-  text-align: center; /* can be center / left / right depending on your layout */
-}
-
-.nav__list,
-.nav__list a {
-  position: relative;
-  z-index: 2;
-}
-
-.nav__list > li {
-  display: inline-block;
-}
-
-.nav__list a {
-  color: #000;
-  background-color: #fff;
-  text-decoration: none;
-  display: block;
-  padding: 1em;
-}
-
-.nav__list a:hover,
-.nav__list a:focus,
-.has-drop:focus > a {
-  background-color: #000;
-  color: #fff;
-}
-
 .has-drop {
   position: relative;
 }

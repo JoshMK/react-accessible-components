@@ -107,9 +107,7 @@ class NavList extends Component {
         }
         //otherwise, click current dropdown link
         else {
-          this.list.current.children[
-            this.state.index
-          ].firstElementChild.click();
+          list.children[this.state.index].firstElementChild.click();
         }
       }
     }
