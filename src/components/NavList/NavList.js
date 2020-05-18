@@ -131,15 +131,21 @@ class NavList extends Component {
         tabIndex="-1"
         onKeyDown={(e) => this.cycleListWithKeyboard(e)}
       >
-        <a
-          id={this.props.id}
-          href={this.props.href}
-          aria-controls={`menu-${this.props.id}`}
-          aria-haspopup="true"
-          aria-expanded={this.state.focused === true ? "true" : "false"}
-        >
-          {this.props.text}
-        </a>
+        {sublinks.length > 0 ? (
+          <a
+            id={this.props.id}
+            href={this.props.href}
+            aria-controls={`menu-${this.props.id}`}
+            aria-haspopup="true"
+            aria-expanded={this.state.focused === true ? "true" : "false"}
+          >
+            {this.props.text}
+          </a>
+        ) : (
+          <a id={this.props.id} href={this.props.href}>
+            {this.props.text}
+          </a>
+        )}
         {sublinks.length > 0 && (
           <ul
             ref={this.list}
