@@ -12,7 +12,8 @@ class NavList extends Component {
   list = React.createRef();
 
   resetListFocusAfterClick = (e) => {
-    if (!this.list.current.contains(e.target)) {
+    const list = this.list.current;
+    if (list !== null && !list.contains(e.target)) {
       this.resetListFocus();
     }
   };
@@ -57,50 +58,59 @@ class NavList extends Component {
     );
   };
 
-  cycleListWithKeyboard = (e, list) => {
-    const key = e.key || e.which || e.keyCode;
-    const parentList = this.list.current.parentNode;
-    //left arrow key - cycle through topmost list items
-    if (key === "ArrowLeft" || key === 37) {
-      if (this.state.index === -1) {
-        //only cycle left if sibling exists
-        this.cycleParentListLeftRightWithKeyboard(parentList, false);
+  cycleListWithKeyboard = (e) => {
+    if (this.list.current !== null) {
+      const key = e.key || e.which || e.keyCode;
+      const list = this.list.current;
+      const parentList = this.list.current.parentNode;
+      //left arrow key - cycle through topmost list items
+      if (key === "ArrowLeft" || key === 37) {
+        if (this.state.index === -1) {
+          //only cycle left if sibling exists
+          this.cycleParentListLeftRightWithKeyboard(parentList, false);
+        }
       }
-    }
-    //right arrow key - cycle through topmost list items
-    else if (key === "ArrowRight" || key === 39) {
-      if (this.state.index === -1) {
-        //only cycle left if sibling exists
-        this.cycleParentListLeftRightWithKeyboard(parentList, true);
+      //right arrow key - cycle through topmost list items
+      else if (key === "ArrowRight" || key === 39) {
+        if (this.state.index === -1) {
+          //only cycle left if sibling exists
+          this.cycleParentListLeftRightWithKeyboard(parentList, true);
+        }
       }
-    }
-    //down arrow key
-    else if (key === "ArrowDown" || key === 40) {
-      if (
-        list.childElementCount > 0 &&
-        this.state.index + 1 < list.childElementCount
-      ) {
-        this.updateListIndex(true);
+      //down arrow key
+      else if (key === "ArrowDown" || key === 40) {
+        if (
+          list.childElementCount > 0 &&
+          this.state.index + 1 < list.childElementCount
+        ) {
+          this.updateListIndex(true);
+        }
+        //up arrow key
+      } else if (key === "ArrowUp" || key === 40) {
+        if (this.state.index > 0) {
+          this.updateListIndex(false);
+        }
+        //tab - reset index after tabbing or shift-tabbing through nav
+      } else if (key === "Tab" || key === 9) {
+        this.resetListFocus();
       }
-      //up arrow key
-    } else if (key === "ArrowUp" || key === 40) {
-      if (this.state.index > 0) {
-        this.updateListIndex(false);
+      //enter - focus initial child
+      else if (key === "Enter" || key === 32) {
+        if (this.state.index === -1 && list.childElementCount > 0) {
+          this.updateListIndex(true);
+        }
       }
-      //tab - reset index after tabbing or shift-tabbing through nav
-    } else if (key === "Tab" || key === 9) {
-      this.resetListFocus();
-    }
-    //enter - focus initial child
-    else if (key === "Enter" || key === 32) {
-      if (this.state.index === -1 && list.childElementCount > 0) {
-        this.updateListIndex(true);
-      }
-    }
-    //space - simulate click in topmost dropdown nav link
-    else if (key === " " || key === 32) {
-      if (this.state.index === -1) {
-        list.previousSibling.click();
+      //space - simulate click in topmost dropdown nav link
+      else if (key === " " || key === 32) {
+        if (this.state.index === -1) {
+          list.previousSibling.click();
+        }
+        //otherwise, click current dropdown link
+        else {
+          this.list.current.children[
+            this.state.index
+          ].firstElementChild.click();
+        }
       }
     }
   };
@@ -118,36 +128,42 @@ class NavList extends Component {
     return (
       <li
         className={`has-drop ${this.state.focused ? "has-drop--focused" : ""}`}
-        aria-expanded={this.state.focused === true ? "true" : "false"}
-        onKeyDown={(e) => this.cycleListWithKeyboard(e, this.list.current)}
+        tabIndex="-1"
+        onKeyDown={(e) => this.cycleListWithKeyboard(e)}
       >
         <a
           id={this.props.id}
           href={this.props.href}
           aria-controls={`menu-${this.props.id}`}
           aria-haspopup="true"
+          aria-expanded={this.state.focused === true ? "true" : "false"}
         >
           {this.props.text}
         </a>
-        <ul
-          ref={this.list}
-          id={`menu-${this.props.id}`}
-          className={`nav__list__drop ${this.state.focused ? "has-focus" : ""}`}
-          aria-expanded={this.state.focused === true ? "true" : "false"}
-          aria-labelledby={this.props.id}
-        >
-          {sublinks.map((sublink, i) => {
-            return (
-              <li
-                key={
-                  sublink.hasOwnProperty("key") ? sublink.key : `sublink-${i}`
-                }
-              >
-                <a href={sublink.href}>{sublink.text}</a>
-              </li>
-            );
-          })}
-        </ul>
+        {sublinks.length > 0 && (
+          <ul
+            ref={this.list}
+            id={`menu-${this.props.id}`}
+            className={`nav__list__drop ${
+              this.state.focused ? "has-focus" : ""
+            }`}
+            aria-expanded={this.state.focused === true ? "true" : "false"}
+            aria-labelledby={this.props.id}
+          >
+            {sublinks.map((sublink, i) => {
+              return (
+                <li
+                  key={
+                    sublink.hasOwnProperty("key") ? sublink.key : `sublink-${i}`
+                  }
+                  tabIndex="-1"
+                >
+                  <a href={sublink.href}>{sublink.text}</a>
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </li>
     );
   }
