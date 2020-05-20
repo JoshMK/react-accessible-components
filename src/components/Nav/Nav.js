@@ -48,6 +48,18 @@ const NAVITEMS = [
 ];
 NAVITEMS.map((link) => {
   link.key = `nav-link-${link.href}-${link.text}`;
+  //set aria attributes for dropdown menus if they exist
+  if (link.hasOwnProperty("sublinks")) {
+    link.sublinkAriaAttributes = {
+      ["aria-controls"]: `menu-${link.id}`,
+      ["aria-haspopup"]: true,
+      ["aria-expanded"]: false, //need to set this as an obj prop to account for mixed dropdown / single link nav items
+    };
+    link.sublinkListAriaAttributes = {
+      ["aria-expanded"]: false,
+      ["aria-labelledby"]: link.id,
+    };
+  }
   return link;
 });
 //component
@@ -59,10 +71,7 @@ class Nav extends Component {
           {NAVITEMS.map((item, i) => {
             return (
               <NavList
-                key={item.hasOwnProperty("key") ? item.key : `link-${i}`}
-                id={item.id}
-                href={item.href}
-                text={item.text}
+                {...item}
                 sublinks={
                   item.hasOwnProperty("sublinks") && item.sublinks.length > 0
                     ? item.sublinks
