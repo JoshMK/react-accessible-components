@@ -1,19 +1,19 @@
-.nav__list {
+.app__nav {
   border-bottom: 1px solid #000;
   text-align: center; /* can be center / left / right depending on your layout */
 }
 
-.nav__list,
-.nav__list a {
+.app__nav,
+.app__nav a {
   position: relative;
   z-index: 2;
 }
 
-.nav__list > li {
+.app__nav > li {
   display: inline-block;
 }
 
-.nav__list a {
+.app__nav a {
   color: #000;
   background-color: #fff;
   text-decoration: none;
@@ -21,8 +21,8 @@
   padding: 1em;
 }
 
-.nav__list a:hover,
-.nav__list a:focus {
+.app__nav a:hover,
+.app__nav a:focus {
   background-color: #000;
   color: #fff;
 }

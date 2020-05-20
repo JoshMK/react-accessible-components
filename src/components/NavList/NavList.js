@@ -144,8 +144,8 @@ class NavList extends Component {
     const sublinks = this.props.sublinks;
     return (
       <li
-        className={`navlist-dropdown ${
-          this.state.focused ? "navlist-dropdown--focused" : ""
+        className={`app__navlist${
+          this.state.focused ? " app__navlist--focused" : ""
         }`}
         tabIndex="-1"
         onKeyDown={(e) => this.cycleListWithKeyboard(e)}
@@ -162,12 +162,19 @@ class NavList extends Component {
         <ul
           ref={this.list}
           id={`menu-${this.props.id}`}
-          className={`dropdown-menu ${this.state.focused ? "has-focus" : ""}`}
+          className={`app__navlist-dropdown${
+            this.props.sublinks.length > 0
+              ? ""
+              : " app__navlist-dropdown--hidden"
+          } ${this.state.focused ? " app__navlist-dropdown--focused" : ""}`}
           {...this.props.sublinkListAriaAttributes}
         >
           {sublinks.map((sublink, i) => {
             return (
-              <li key={sublink.key} tabIndex="-1">
+              <li
+                key={sublink.key !== undefined ? sublink.key : `link-${i}`}
+                tabIndex="-1"
+              >
                 <a href={sublink.href}>{sublink.text}</a>
               </li>
             );

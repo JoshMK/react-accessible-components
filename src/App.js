@@ -6,8 +6,8 @@ import Nav from "./components/Nav/Nav";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="app">
+      <header>
         <Nav />
       </header>
       <main>

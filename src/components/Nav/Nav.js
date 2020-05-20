@@ -67,7 +67,7 @@ class Nav extends Component {
   render() {
     return (
       <nav aria-label="Primary">
-        <ul className="nav__list">
+        <ul className="app__nav">
           {NAVITEMS.map((item, i) => {
             return (
               <NavList
