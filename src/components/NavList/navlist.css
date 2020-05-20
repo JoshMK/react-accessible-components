@@ -1,8 +1,8 @@
-.has-drop {
+.navlist-dropdown {
   position: relative;
 }
 
-.nav__list__drop {
+.dropdown-menu {
   left: 0;
   margin: 0;
   position: absolute;
@@ -21,14 +21,18 @@
   visibility: hidden;
 }
 
-.nav__list__drop a {
+.dropdown-menu a {
   padding: 1em;
   white-space: nowrap;
 }
 
-.has-drop.has-drop--focused,
-.has-drop:hover .nav__list__drop,
-.nav__list__drop.has-focus {
+.dropdown-menu .dropdown-menu--hidden {
+  display: none;
+}
+
+.navlist-dropdown.navlist-dropdown--focused,
+.navlist-dropdown:hover .dropdown-menu,
+.dropdown-menu.has-focus {
   opacity: 1;
   visibility: visible;
   transform: translateY(0px);

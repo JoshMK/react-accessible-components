@@ -144,9 +144,13 @@ class NavList extends Component {
     const sublinks = this.props.sublinks;
     return (
       <li
-        className={`has-drop ${this.state.focused ? "has-drop--focused" : ""}`}
+        className={`navlist-dropdown ${
+          this.state.focused ? "navlist-dropdown--focused" : ""
+        }`}
         tabIndex="-1"
         onKeyDown={(e) => this.cycleListWithKeyboard(e)}
+        onMouseEnter={() => this.toggleAriaExpanded("true")}
+        onMouseLeave={() => this.toggleAriaExpanded("false")}
       >
         <a
           id={this.props.id}
@@ -158,17 +162,12 @@ class NavList extends Component {
         <ul
           ref={this.list}
           id={`menu-${this.props.id}`}
-          className={`nav__list__drop ${this.state.focused ? "has-focus" : ""}`}
+          className={`dropdown-menu ${this.state.focused ? "has-focus" : ""}`}
           {...this.props.sublinkListAriaAttributes}
         >
           {sublinks.map((sublink, i) => {
             return (
-              <li
-                key={
-                  sublink.hasOwnProperty("key") ? sublink.key : `sublink-${i}`
-                }
-                tabIndex="-1"
-              >
+              <li key={sublink.key} tabIndex="-1">
                 <a href={sublink.href}>{sublink.text}</a>
               </li>
             );
