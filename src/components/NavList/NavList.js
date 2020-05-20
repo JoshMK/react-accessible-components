@@ -11,6 +11,16 @@ class NavList extends Component {
 
   list = React.createRef();
 
+  //originally set on every link/list using aria-expanded={this.state.focused === true ? "true" : "false"}
+  toggleAriaExpanded = (expand) => {
+    const list = this.list.current;
+    if (list.getAttribute("aria-expanded") !== null) {
+      list.setAttribute("aria-expanded", expand);
+      list.previousSibling.setAttribute("aria-expanded", expand);
+    }
+  };
+
+  //detect if a list has been deselected via mouse click
   resetListFocusAfterClick = (e) => {
     const list = this.list.current;
     if (list !== null && !list.contains(e.target)) {
@@ -18,12 +28,16 @@ class NavList extends Component {
     }
   };
 
+  //return a list to its default index/focus/aria-expanded state
   resetListFocus = () => {
-    this.setState((prevState) => ({
-      ...prevState,
-      focused: false,
-      index: -1,
-    }));
+    this.setState(
+      (prevState) => ({
+        ...prevState,
+        focused: false,
+        index: -1,
+      }),
+      this.toggleAriaExpanded("false")
+    );
   };
 
   //true - right | false - left
@@ -35,6 +49,7 @@ class NavList extends Component {
     }
   };
 
+  //true - increment | false - decrement
   incrementDecrementListIndex = (index, increment) => {
     this.setState((prevState) => ({
       ...prevState,
@@ -50,6 +65,10 @@ class NavList extends Component {
         focused: true,
       }),
       () => {
+        //toggle aria-expanded on first list item index
+        if (increment === true && this.state.index === -1) {
+          this.toggleAriaExpanded("true");
+        }
         this.incrementDecrementListIndex(this.state.index, increment);
         this.list.current.children[
           increment === true ? this.state.index + 1 : this.state.index - 1
@@ -129,45 +148,32 @@ class NavList extends Component {
         tabIndex="-1"
         onKeyDown={(e) => this.cycleListWithKeyboard(e)}
       >
-        {sublinks.length > 0 ? (
-          <a
-            id={this.props.id}
-            href={this.props.href}
-            aria-controls={`menu-${this.props.id}`}
-            aria-haspopup="true"
-            aria-expanded={this.state.focused === true ? "true" : "false"}
-          >
-            {this.props.text}
-          </a>
-        ) : (
-          <a id={this.props.id} href={this.props.href}>
-            {this.props.text}
-          </a>
-        )}
-        {sublinks.length > 0 && (
-          <ul
-            ref={this.list}
-            id={`menu-${this.props.id}`}
-            className={`nav__list__drop ${
-              this.state.focused ? "has-focus" : ""
-            }`}
-            aria-expanded={this.state.focused === true ? "true" : "false"}
-            aria-labelledby={this.props.id}
-          >
-            {sublinks.map((sublink, i) => {
-              return (
-                <li
-                  key={
-                    sublink.hasOwnProperty("key") ? sublink.key : `sublink-${i}`
-                  }
-                  tabIndex="-1"
-                >
-                  <a href={sublink.href}>{sublink.text}</a>
-                </li>
-              );
-            })}
-          </ul>
-        )}
+        <a
+          id={this.props.id}
+          href={this.props.href}
+          {...this.props.sublinkAriaAttributes}
+        >
+          {this.props.text}
+        </a>
+        <ul
+          ref={this.list}
+          id={`menu-${this.props.id}`}
+          className={`nav__list__drop ${this.state.focused ? "has-focus" : ""}`}
+          {...this.props.sublinkListAriaAttributes}
+        >
+          {sublinks.map((sublink, i) => {
+            return (
+              <li
+                key={
+                  sublink.hasOwnProperty("key") ? sublink.key : `sublink-${i}`
+                }
+                tabIndex="-1"
+              >
+                <a href={sublink.href}>{sublink.text}</a>
+              </li>
+            );
+          })}
+        </ul>
       </li>
     );
   }
