@@ -51,13 +51,13 @@ NAVITEMS.map((link) => {
   //set aria attributes for dropdown menus if they exist
   if (link.hasOwnProperty("sublinks")) {
     link.sublinkAriaAttributes = {
-      ["aria-controls"]: `menu-${link.id}`,
-      ["aria-haspopup"]: true,
-      ["aria-expanded"]: false, //need to set this as an obj prop to account for mixed dropdown / single link nav items
+      "aria-controls": `menu-${link.id}`,
+      "aria-haspopup": true,
+      "aria-expanded": false, //need to set this as an obj prop to account for mixed dropdown / single link nav items
     };
     link.sublinkListAriaAttributes = {
-      ["aria-expanded"]: false,
-      ["aria-labelledby"]: link.id,
+      "aria-expanded": false,
+      "aria-labelledby": link.id,
     };
   }
   return link;
