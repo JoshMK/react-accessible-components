@@ -1,7 +1,7 @@
 //React core components
 import React, { Component } from "react";
 //css
-import "./navlist.css";
+import "./navlistkeyboard.css";
 
 class NavList extends Component {
   state = {

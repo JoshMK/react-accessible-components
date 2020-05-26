@@ -1,7 +1,7 @@
 //React core components
 import React, { Component } from "react";
 //custom components
-import NavList from "../NavList/NavList";
+import NavListKeyboard from "../NavListKeyboard/NavListKeyboard";
 //css
 import "./nav.css";
 //links - this array can be imported as a constant, placed within the nav element to keep project structure flexible
@@ -70,7 +70,7 @@ class Nav extends Component {
         <ul className="app__nav">
           {NAVITEMS.map((item, i) => {
             return (
-              <NavList
+              <NavListKeyboard
                 {...item}
                 sublinks={
                   item.hasOwnProperty("sublinks") && item.sublinks.length > 0
