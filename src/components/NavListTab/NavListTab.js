@@ -1,7 +1,7 @@
 //React core components
 import React, { Component } from "react";
 //css
-import "./navlist.css";
+import "./navlist-tab.css";
 
 class NavList extends Component {
   state = {
@@ -10,7 +10,7 @@ class NavList extends Component {
 
   render() {
     return (
-      <li className="has-drop">
+      <li tabIndex="-1" className="has-drop">
         <a href={this.props.href}>{this.props.text}</a>
         <ul
           className={`nav__list__drop ${this.state.focused ? "has-focus" : ""}`}
