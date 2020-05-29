@@ -32,3 +32,9 @@
 .app__menu-button-line:last-child {
   margin-bottom: 2px;
 }
+
+@media screen and (min-width: 768px) {
+  .app__menu-button {
+    display: none;
+  }
+}

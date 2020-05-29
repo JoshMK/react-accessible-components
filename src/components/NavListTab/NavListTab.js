@@ -13,7 +13,9 @@ class NavList extends Component {
       <li
         tabIndex="-1"
         className={`app__navlist${
-          !this.props.mobileMenuToggled ? " app__navlist--hidden" : ""
+          !this.props.mobileMenuToggled && this.props.isMobile
+            ? " app__navlist--hidden"
+            : ""
         }`}
       >
         <a href={this.props.href}>{this.props.text}</a>

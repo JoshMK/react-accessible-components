@@ -68,14 +68,33 @@ NAVITEMS.map((link) => {
 class Nav extends Component {
   state = {
     mobileMenuToggled: false,
+    isMobile: true,
+  };
+
+  checkIsMobile = () => {
+    window.innerWidth > 768
+      ? this.setState({ isMobile: false })
+      : this.setState({ isMobile: true });
   };
 
   toggleMobileMenu = () => {
     this.setState((prevState) => ({
       ...prevState,
-      mobileMenuToggled: !this.state.mobileMenuToggled,
+      mobileMenuToggled: !prevState.mobileMenuToggled,
     }));
   };
+
+  componentDidMount() {
+    //mount all events
+    window.addEventListener("resize", this.checkIsMobile);
+    this.checkIsMobile();
+  }
+
+  componentWillUnmount() {
+    //unmount all events
+    window.removeEventListener("resize", this.checkIsMobile);
+  }
+
   //component
   render() {
     return (
@@ -90,6 +109,7 @@ class Nav extends Component {
               <>
                 <NavListTab
                   {...item}
+                  isMobile={this.state.isMobile}
                   mobileMenuToggled={this.state.mobileMenuToggled}
                   sublinks={
                     item.hasOwnProperty("sublinks") && item.sublinks.length > 0

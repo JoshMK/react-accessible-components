@@ -1,7 +1,7 @@
 .app__nav {
   border-bottom: 1px solid #000;
   text-align: center; /* can be center / left / right depending on your layout */
-  min-height: 52px;
+  margin-top: 52px;
 }
 
 .app__nav,
@@ -24,7 +24,10 @@
   color: #fff;
 }
 
-@media screen only and (max-width: 768px) {
+@media screen and (min-width: 768px) {
+  .app__nav {
+    margin-top: 0;
+  }
   .app__nav > li {
     display: inline-block;
   }
