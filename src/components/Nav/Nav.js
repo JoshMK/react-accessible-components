@@ -67,7 +67,6 @@ NAVITEMS.map((link) => {
 //component
 class Nav extends Component {
   state = {
-    mobile: true,
     mobileMenuToggled: false,
   };
 
@@ -91,6 +90,7 @@ class Nav extends Component {
               <>
                 <NavListTab
                   {...item}
+                  mobileMenuToggled={this.state.mobileMenuToggled}
                   sublinks={
                     item.hasOwnProperty("sublinks") && item.sublinks.length > 0
                       ? item.sublinks

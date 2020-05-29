@@ -10,11 +10,16 @@ class NavList extends Component {
 
   render() {
     return (
-      <li tabIndex="-1" className="app__navlist">
+      <li
+        tabIndex="-1"
+        className={`app__navlist${
+          !this.props.mobileMenuToggled ? " app__navlist--hidden" : ""
+        }`}
+      >
         <a href={this.props.href}>{this.props.text}</a>
         <ul
-          className={`app__navlist-dropdown ${
-            this.state.focused ? "app__navlist-dropdown--focused" : ""
+          className={`app__navlist-dropdown${
+            this.state.focused ? " app__navlist-dropdown--focused" : ""
           }`}
         >
           {this.props.sublinks.map((sublink, i) => {

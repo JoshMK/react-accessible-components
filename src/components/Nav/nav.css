@@ -1,16 +1,13 @@
 .app__nav {
   border-bottom: 1px solid #000;
   text-align: center; /* can be center / left / right depending on your layout */
+  min-height: 52px;
 }
 
 .app__nav,
 .app__nav a {
   position: relative;
   z-index: 2;
-}
-
-.app__nav > li {
-  display: inline-block;
 }
 
 .app__nav a {
@@ -25,4 +22,10 @@
 .app__nav a:focus {
   background-color: #000;
   color: #fff;
+}
+
+@media screen only and (max-width: 768px) {
+  .app__nav > li {
+    display: inline-block;
+  }
 }

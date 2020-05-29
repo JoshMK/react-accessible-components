@@ -2,6 +2,10 @@
   position: relative;
 }
 
+.app__navlist.app__navlist--hidden {
+  display: none;
+}
+
 .app__navlist-dropdown {
   left: 0;
   margin: 0;
@@ -9,7 +13,6 @@
   text-align: left;
   top: 100%;
   opacity: 0;
-  transform: translateY(-20px);
   height: 1px;
   transition: transform 0.2s ease-in-out, opacity 0.1s ease-out;
   overflow: hidden;
@@ -29,7 +32,6 @@
 .app__navlist:hover .app__navlist-dropdown,
 .app__navlist-dropdown.app__navlist-dropdown--focused {
   opacity: 1;
-  transform: translateY(0px);
   height: auto;
   z-index: 3;
 }
