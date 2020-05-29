@@ -1,0 +1,33 @@
+.app__menu-button {
+  position: absolute;
+  right: 1em;
+  top: 5px;
+  padding: 0.5em;
+  border-radius: 4px;
+  border-color: #000;
+  font-size: 1em;
+  background: transparent;
+  z-index: 4;
+}
+
+.app__menu-button-text {
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0;
+  border: 0;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+
+.app__menu-button-line {
+  display: block;
+  width: 1.25em;
+  border: 1px solid #000;
+  border-radius: 16px;
+  margin-top: 4px;
+}
+
+.app__menu-button-line:last-child {
+  margin-bottom: 2px;
+}

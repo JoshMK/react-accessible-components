@@ -15,9 +15,9 @@ class NavList extends Component {
         <ul
           className={`nav__list__drop ${this.state.focused ? "has-focus" : ""}`}
         >
-          {this.props.sublinks.map((sublink) => {
+          {this.props.sublinks.map((sublink, i) => {
             return (
-              <li>
+              <li key={i}>
                 <a
                   href="#item1"
                   onFocus={() =>

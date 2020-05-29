@@ -1,7 +1,8 @@
 //React core components
 import React, { Component } from "react";
 //custom components
-import NavListKeyboard from "../NavListKeyboard/NavListKeyboard";
+import NavMenuButton from "../NavMenuButton/NavMenuButton";
+//import NavListKeyboard from "../NavListKeyboard/NavListKeyboard";
 import NavListTab from "../NavListTab/NavListTab";
 //css
 import "./nav.css";
@@ -65,31 +66,37 @@ NAVITEMS.map((link) => {
 });
 //component
 class Nav extends Component {
+  state = {
+    mobile: true,
+    mobileMenuToggled: false,
+  };
+
+  toggleMobileMenu = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      mobileMenuToggled: !this.state.mobileMenuToggled,
+    }));
+  };
+  //component
   render() {
     return (
       <nav aria-label="Primary">
+        <NavMenuButton
+          mobileMenuToggled={this.state.mobileMenuToggled}
+          toggleMobileMenu={this.toggleMobileMenu}
+        />
         <ul className="app__nav">
-          {NAVITEMS.map((item, i) => {
+          {NAVITEMS.map((item) => {
             return (
               <>
-              <NavListTab
-              {...item}
-              sublinks={
-                item.hasOwnProperty("sublinks") && item.sublinks.length > 0
-                  ? item.sublinks
-                  : []
-              }
-            />
-            {/*
-              <NavListKeyboard
-                {...item}
-                sublinks={
-                  item.hasOwnProperty("sublinks") && item.sublinks.length > 0
-                    ? item.sublinks
-                    : []
-                }
-              />
-              */}
+                <NavListTab
+                  {...item}
+                  sublinks={
+                    item.hasOwnProperty("sublinks") && item.sublinks.length > 0
+                      ? item.sublinks
+                      : []
+                  }
+                />
               </>
             );
           })}
