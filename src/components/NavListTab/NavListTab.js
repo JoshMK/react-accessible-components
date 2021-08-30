@@ -1,44 +1,32 @@
 //React core components
-import React, { Component } from "react";
+import React, { useState } from "react";
 //css
 import "./navlist-tab.css";
 
-class NavList extends Component {
-  state = {
-    focused: false,
-  };
+const NavList = ({ mobileMenuToggled, isMobile, href, text, sublinks }) => {
+  const [focused, setFocused] = useState(false);
 
-  render() {
-    return (
-      <li
-        tabIndex="-1"
-        className={`app__navlist${
-          !this.props.mobileMenuToggled && this.props.isMobile
-            ? " app__navlist--hidden"
-            : ""
-        }`}
-      >
-        <a href={this.props.href}>{this.props.text}</a>
+  return (
+    <li
+      tabIndex="-1"
+      className={`app__navlist${
+        !mobileMenuToggled && isMobile ? " app__navlist--hidden" : ""
+      }`}
+    >
+      <a href={href}>{text}</a>
+      {sublinks.length > 0 && (
         <ul
           className={`app__navlist-dropdown${
-            this.state.focused ? " app__navlist-dropdown--focused" : ""
+            focused ? " app__navlist-dropdown--focused" : ""
           }`}
         >
-          {this.props.sublinks.map((sublink, i) => {
+          {sublinks.map((sublink, i) => {
             return (
               <li key={i}>
                 <a
-                  href="#item1"
-                  onFocus={() =>
-                    this.setState({
-                      focused: true,
-                    })
-                  }
-                  onBlur={() =>
-                    this.setState({
-                      focused: false,
-                    })
-                  }
+                  href={sublink.href}
+                  onFocus={() => setFocused(true)}
+                  onBlur={() => setFocused(false)}
                 >
                   {sublink.text}
                 </a>
@@ -46,9 +34,9 @@ class NavList extends Component {
             );
           })}
         </ul>
-      </li>
-    );
-  }
-}
+      )}
+    </li>
+  );
+};
 
 export default NavList;
