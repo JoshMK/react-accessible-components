@@ -1,5 +1,5 @@
 //React core components
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 //custom components
 import NavMenuButton from "../NavMenuButton/NavMenuButton";
 //import NavListKeyboard from "../NavListKeyboard/NavListKeyboard";
@@ -65,65 +65,49 @@ NAVITEMS.map((link) => {
   return link;
 });
 //component
-class Nav extends Component {
-  state = {
-    mobileMenuToggled: false,
-    isMobile: true,
+const Nav = () => {
+  const [mobileMenuToggled, setMobileMenuToggled] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
+
+  const checkIsMobile = () => {
+    window.innerWidth > 768 ? setIsMobile(false) : setIsMobile(true);
   };
 
-  checkIsMobile = () => {
-    window.innerWidth > 768
-      ? this.setState({ isMobile: false })
-      : this.setState({ isMobile: true });
+  const toggleMobileMenu = () => {
+    setMobileMenuToggled(!mobileMenuToggled);
   };
 
-  toggleMobileMenu = () => {
-    this.setState((prevState) => ({
-      ...prevState,
-      mobileMenuToggled: !prevState.mobileMenuToggled,
-    }));
-  };
+  useEffect(() => {
+    window.addEventListener("resize", checkIsMobile);
+    checkIsMobile();
+  }, []);
 
-  componentDidMount() {
-    //mount all events
-    window.addEventListener("resize", this.checkIsMobile);
-    this.checkIsMobile();
-  }
-
-  componentWillUnmount() {
-    //unmount all events
-    window.removeEventListener("resize", this.checkIsMobile);
-  }
-
-  //component
-  render() {
-    return (
-      <nav aria-label="Primary">
-        <NavMenuButton
-          mobileMenuToggled={this.state.mobileMenuToggled}
-          toggleMobileMenu={this.toggleMobileMenu}
-        />
-        <ul className="app__nav">
-          {NAVITEMS.map((item) => {
-            return (
-              <>
-                <NavListTab
-                  {...item}
-                  isMobile={this.state.isMobile}
-                  mobileMenuToggled={this.state.mobileMenuToggled}
-                  sublinks={
-                    item.hasOwnProperty("sublinks") && item.sublinks.length > 0
-                      ? item.sublinks
-                      : []
-                  }
-                />
-              </>
-            );
-          })}
-        </ul>
-      </nav>
-    );
-  }
-}
+  return (
+    <nav aria-label="Primary">
+      <NavMenuButton
+        mobileMenuToggled={mobileMenuToggled}
+        toggleMobileMenu={toggleMobileMenu}
+      />
+      <ul className="app__nav">
+        {NAVITEMS.map((item) => {
+          return (
+            <>
+              <NavListTab
+                {...item}
+                isMobile={isMobile}
+                mobileMenuToggled={mobileMenuToggled}
+                sublinks={
+                  item.hasOwnProperty("sublinks") && item.sublinks.length > 0
+                    ? item.sublinks
+                    : []
+                }
+              />
+            </>
+          );
+        })}
+      </ul>
+    </nav>
+  );
+};
 
 export default Nav;
